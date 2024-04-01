@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
 import { IS_PUBLIC_KEY } from './public.decorator';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_SECRET_KEY } from './auth.jwt.secrect';
@@ -17,9 +16,7 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
   ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     // getAllAndOverride 进行覆盖 类 覆盖 路由
     const isPublic = this.reflector.getAllAndOverride(IS_PUBLIC_KEY, [
       context.getHandler(),
@@ -38,7 +35,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = this.jwtService.verifyAsync(token, {
+      const payload = await this.jwtService.verifyAsync(token, {
         secret: JWT_SECRET_KEY,
       });
 

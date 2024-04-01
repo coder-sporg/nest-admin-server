@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseFilters,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -21,6 +22,15 @@ import { wrapperResponse } from '../../utils';
 @UseFilters(new TypeormFilter())
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('/info')
+  getUserInfo(@Req() request) {
+    // console.log('request: ', request.user); // request.user 就是登录的用户信息
+    return wrapperResponse(
+      this.userService.findByUsername(request.user.username),
+      '获取用户信息成功',
+    );
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
