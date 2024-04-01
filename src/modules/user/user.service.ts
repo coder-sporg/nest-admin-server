@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
+import * as md5 from 'md5';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
 
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(createUserDto);
+    user.password = md5(user.password).toUpperCase();
     // 用户状态 1 正常 2 禁用
     user.active = 1;
 
