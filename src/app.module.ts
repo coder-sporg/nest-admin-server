@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BookModule } from './modules/book/book.module';
+import { MenuModule } from './modules/menu/menu.module';
 import * as Joi from 'joi';
 import * as dotenv from 'dotenv';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -60,6 +61,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
     UserModule,
     AuthModule,
     BookModule,
+    MenuModule,
   ],
   controllers: [AppController],
   providers: [AppService],
