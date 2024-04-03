@@ -304,59 +304,16 @@ export const MENU_LIST = `[
       ]
   },
   {
-    "path": "/permission",
-    "name": "Permission",
-    "redirect": "/permission/front/page",
-    "meta": {
-      "orderNo": 15,
-      "icon": "ion:key-outline",
-      "title": "routes.demo.permission.permission"
-    },
-    "children": [
-      {
-        "path": "front",
-        "name": "PermissionFrontDemo",
-        "meta": { "title": "routes.demo.permission.front" },
-        "children": [
+      "path":"/permission",
+      "name":"Permission",
+      "redirect":"/permission/menu",
+      "meta":{"orderNo":15,"icon":"ion:key-outline","title":"routes.demo.permission.permission"},
+      "children":[
           {
-            "path": "page",
-            "name": "FrontPageAuth",
-            "meta": { "title": "routes.demo.permission.frontPage" }
-          },
-          {
-            "path": "btn",
-            "name": "FrontBtnAuth",
-            "meta": { "title": "routes.demo.permission.frontBtn" }
-          },
-          {
-            "path": "auth-pageA",
-            "name": "FrontAuthPageA",
-            "meta": { "title": "routes.demo.permission.frontTestA", "roles": ["super"] }
-          },
-          {
-            "path": "auth-pageB",
-            "name": "FrontAuthPageB",
-            "meta": { "title": "routes.demo.permission.frontTestB", "roles": ["test"] }
+              "path":"menu",
+              "name":"PermissionMenu",
+              "meta":{"title":"routes.demo.permission.menu"}
           }
-        ]
-      },
-      {
-        "path": "back",
-        "name": "PermissionBackDemo",
-        "meta": { "title": "routes.demo.permission.back" },
-        "children": [
-          {
-            "path": "page",
-            "name": "BackAuthPage",
-            "meta": { "title": "routes.demo.permission.backPage" }
-          },
-          {
-            "path": "btn",
-            "name": "BackAuthBtn",
-            "meta": { "title": "routes.demo.permission.backBtn" }
-          }
-        ]
-      }
-    ]
+      ]
   }
   ]`;

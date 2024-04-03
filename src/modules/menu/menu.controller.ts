@@ -18,12 +18,24 @@ export class MenuController {
 
   @Post()
   create(@Body() createMenuDto: CreateMenuDto) {
-    return this.menuService.create(createMenuDto);
+    console.log('createMenuDto: ', createMenuDto);
+    return wrapperResponse(
+      this.menuService.create(createMenuDto),
+      '创建菜单成功',
+    );
+  }
+
+  @Get('active')
+  findActiveMenu() {
+    return wrapperResponse(
+      this.menuService.findAllActive(),
+      '获取激活菜单列表成功',
+    );
   }
 
   @Get()
   findAllMenu() {
-    return wrapperResponse(this.menuService.findAll(), '获取菜单列表成功');
+    return wrapperResponse(this.menuService.findAll(), '获取所有菜单列表成功');
   }
 
   @Get(':id')
@@ -33,7 +45,10 @@ export class MenuController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMenuDto: UpdateMenuDto) {
-    return this.menuService.update(+id, updateMenuDto);
+    return wrapperResponse(
+      this.menuService.update(+id, updateMenuDto),
+      '编辑菜单成功',
+    );
   }
 
   @Delete(':id')
