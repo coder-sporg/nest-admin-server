@@ -13,7 +13,9 @@ export const conditionUtils = <T>(
   // title like :title
   Object.keys(obj).forEach((key) => {
     if (obj[key]) {
-      queryBuilder.andWhere(`${key} like :${key}`, { [key]: obj[key] });
+      queryBuilder.andWhere(`${key} like :${key}`, {
+        [key]: `%${obj[key]}%`,
+      });
     }
   });
   return queryBuilder;

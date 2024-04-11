@@ -37,7 +37,7 @@ export class BookService {
 
     // 有值才进行模糊查询
     // if (title) {
-    //   queryBuilder.andWhere('book.title like :title', { title });
+    //   queryBuilder.andWhere('book.title like :title', { title: `%${title}%` });
     // } else {
     //   queryBuilder.where('book.title is not null');
     //   // queryBuilder.andWhere('1 = 1');
@@ -45,12 +45,12 @@ export class BookService {
 
     // 等价于 上面的代码 where 1=1
     // queryBuilder.andWhere(title ? 'book.title like :title' : '1=1', {
-    //   title,
+    //   title: `%${title}%`,
     // });
 
     // if (author) {
     //   queryBuilder.andWhere('book.author like :author', {
-    //     author,
+    //     author: `%${author}%`,
     //   });
     // }
 
