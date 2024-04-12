@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { BookService } from './book.service';
 import { QueryBookDto } from './types';
-import { wrapperResponse } from '../../utils';
+import { wrapperCountResponse } from '../../utils';
 
 @Controller('book')
 export class BookController {
@@ -9,8 +9,9 @@ export class BookController {
 
   @Get()
   getBookList(@Query() query: QueryBookDto) {
-    return wrapperResponse(
+    return wrapperCountResponse(
       this.bookService.getBookList(query),
+      this.bookService.getBookCount(query),
       '获取图书列表成功',
     );
   }

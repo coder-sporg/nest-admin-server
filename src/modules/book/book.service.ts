@@ -3,10 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Book } from './book.entity';
 import { QueryBookDto } from './types';
-import {
-  conditionSqlUtils,
-  // conditionUtils
-} from '../../utils/db_helper';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { conditionSqlUtils, conditionUtils } from '../../utils/db_helper';
 
 @Injectable()
 export class BookService {
@@ -77,5 +75,21 @@ export class BookService {
     const where = conditionSqlUtils(obj);
     const sql = `select * from book ${where} limit ${pageSize} offset ${(page - 1) * pageSize}`;
     return this.bookRepository.query(sql);
+  }
+
+  getBookCount(params: QueryBookDto) {
+    const { title = '', author = '' } = params;
+    const obj = {
+      'book.title': title,
+      'book.author': author,
+    };
+    // const newQueryBuilder = conditionUtils(
+    //   this.bookRepository.createQueryBuilder('book'),
+    //   obj,
+    // );
+    // return newQueryBuilder.getCount(); // result => 1
+
+    const sql = `select count(*) as count from book ${conditionSqlUtils(obj)}`;
+    return this.bookRepository.query(sql); // result => [{count: '1'}]
   }
 }
