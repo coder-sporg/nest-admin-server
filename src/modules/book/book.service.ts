@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -5,12 +7,22 @@ import { Book } from './book.entity';
 import { QueryBookDto } from './types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { conditionSqlUtils, conditionUtils } from '../../utils/db_helper';
+import EpubBook from './epub-book';
+import { NGINX_PATH } from '../../utils/const';
 
 @Injectable()
 export class BookService {
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
   ) {}
+
+  getBook(id: number) {
+    return this.bookRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
 
   getBookList(params: QueryBookDto) {
     let { page = 1, pageSize = 20 } = params;
@@ -91,5 +103,63 @@ export class BookService {
 
     const sql = `select count(*) as count from book ${conditionSqlUtils(obj)}`;
     return this.bookRepository.query(sql); // result => [{count: '1'}]
+  }
+
+  uploadBook(file: Express.Multer.File) {
+    const destDir = NGINX_PATH;
+    const destPath = path.resolve(destDir, file.originalname); // 存到了 NGINX 的 uploads 文件夹中
+    fs.writeFileSync(destPath, file.buffer);
+    return this.parseBook(destPath, file).then((data) => ({
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size,
+      path: destPath,
+      dir: destDir,
+      data,
+    }));
+  }
+
+  parseBook(bookPath: string, file: Express.Multer.File) {
+    const epubBook = new EpubBook(bookPath, file); // 建模 👍
+    return epubBook.parse();
+  }
+
+  addBook(book: Book) {
+    // return this.bookRepository.save(book);
+    const {
+      title,
+      author,
+      fileName,
+      category,
+      categoryText,
+      cover,
+      language,
+      publisher,
+      rootFile,
+    } = book;
+    const insertSql = `INSERT INTO book(
+      fileName,
+      cover,
+      title,
+      author,
+      publisher,
+      bookId,
+      category,
+      categoryText,
+      language,
+      rootFile
+    ) VALUES (
+      ${fileName},
+      ${cover},
+      ${title},
+      ${author},
+      ${publisher},
+      ${fileName},
+      ${category},
+      ${categoryText},
+      ${language},
+      ${rootFile},
+    )`;
+    return this.bookRepository.query(insertSql);
   }
 }
