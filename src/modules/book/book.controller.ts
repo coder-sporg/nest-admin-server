@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseFilePipeBuilder,
@@ -36,6 +37,11 @@ export class BookController {
   @Post('')
   addBook(@Body() body) {
     return wrapperResponse(this.bookService.addBook(body), '添加电子书成功');
+  }
+
+  @Delete(':id')
+  deleteBook(@Param('id', ParseIntPipe) id) {
+    return wrapperResponse(this.bookService.deleteBook(id), '删除电子书成功');
   }
 
   @Post('upload')

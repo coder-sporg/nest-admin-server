@@ -50,7 +50,7 @@ class EpubBook {
     // 5.拷贝电子书封面图片
     const cover = copyCoverImage(bookData, tmpDir);
     // console.log('cover: ', cover);
-    bookData.cover = cover;
+    bookData.cover = cover.replaceAll('\\', '/'); // 对路径进行处理，将反斜杠替换为斜杠
     // 6.拷贝解压后电子书
     copyUnzipBook(tmpUnzipDir, tmpUnzipDirName);
     // 7.删除临时文件

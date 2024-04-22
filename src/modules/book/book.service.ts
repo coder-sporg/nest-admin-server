@@ -137,6 +137,7 @@ export class BookService {
       publisher,
       rootFile,
     } = book;
+    // 原生 sql 插入, 添加 '' 防止出现 MySQL 关键字
     const insertSql = `INSERT INTO book(
       fileName,
       cover,
@@ -149,17 +150,28 @@ export class BookService {
       language,
       rootFile
     ) VALUES (
-      ${fileName},
-      ${cover},
-      ${title},
-      ${author},
-      ${publisher},
-      ${fileName},
+      '${fileName}',
+      '${cover}',
+      '${title}',
+      '${author}',
+      '${publisher}',
+      '${fileName}',
       ${category},
-      ${categoryText},
-      ${language},
-      ${rootFile},
+      '${categoryText}',
+      '${language}',
+      '${rootFile}'
     )`;
     return this.bookRepository.query(insertSql);
+  }
+
+  updateBook(book: Book) {
+    return this.bookRepository.save(book);
+  }
+
+  deleteBook(id: number) {
+    console.log('id: ', id);
+    // return this.bookRepository.delete(id);
+    const deleteSql = `DELETE FROM book WHERE id = ${id}`;
+    return this.bookRepository.query(deleteSql);
   }
 }
