@@ -7,6 +7,7 @@ import {
   ParseFilePipeBuilder,
   ParseIntPipe,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseInterceptors,
@@ -37,6 +38,14 @@ export class BookController {
   @Post('')
   addBook(@Body() body) {
     return wrapperResponse(this.bookService.addBook(body), '添加电子书成功');
+  }
+
+  @Put(':id')
+  updateBook(@Param('id', ParseIntPipe) id, @Body() body) {
+    return wrapperResponse(
+      this.bookService.updateBook(id, body),
+      '更新电子书成功',
+    );
   }
 
   @Delete(':id')

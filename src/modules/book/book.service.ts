@@ -164,8 +164,18 @@ export class BookService {
     return this.bookRepository.query(insertSql);
   }
 
-  updateBook(book: Book) {
-    return this.bookRepository.save(book);
+  updateBook(id: number, book: Book) {
+    // return this.bookRepository.update(id, book);
+    const sql = [];
+
+    // 拼接 sql 语句
+    Object.keys(book).forEach((key) => {
+      if (book[key]) {
+        sql.push(`${key}='${book[key]}'`);
+      }
+    });
+    const updateSql = `UPDATE book SET ${sql.join(',')} WHERE id = ${id}`;
+    return this.bookRepository.query(updateSql);
   }
 
   deleteBook(id: number) {
