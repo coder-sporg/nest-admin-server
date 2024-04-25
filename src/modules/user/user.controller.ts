@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   UseFilters,
   Req,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,6 +17,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpExceptionFilter } from '../../filters/http-exception.filter';
 import { TypeormFilter } from '../../filters/typeorm.filter';
 import { wrapperResponse } from '../../utils';
+import { QueryUserDto } from './types';
 
 @Controller('user')
 @UseFilters(new HttpExceptionFilter())
@@ -41,8 +43,8 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
-    return wrapperResponse(this.userService.findAll(), '获取用户列表成功');
+  findAll(@Query() query: QueryUserDto) {
+    return wrapperResponse(this.userService.findAll(query), '获取用户列表成功');
   }
 
   @Get(':id')

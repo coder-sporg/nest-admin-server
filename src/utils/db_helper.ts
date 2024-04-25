@@ -21,6 +21,27 @@ export const conditionUtils = <T>(
   return queryBuilder;
 };
 
+/**
+ * 拼接 WHERE 条件，严格相等
+ * @param queryBuilder
+ * @param obj
+ */
+export const conditionEqualUtils = <T>(
+  queryBuilder: SelectQueryBuilder<T>,
+  obj: Record<string, unknown>,
+) => {
+  // WHERE 1=1 AND ...
+  // title = :title
+  Object.keys(obj).forEach((key) => {
+    if (obj[key]) {
+      queryBuilder.andWhere(`${key} = :${key}`, {
+        [key]: obj[key],
+      });
+    }
+  });
+  return queryBuilder;
+};
+
 // const obj = {
 //   'book.title': title, // 值是传递的参数
 //   'book.author': author,
