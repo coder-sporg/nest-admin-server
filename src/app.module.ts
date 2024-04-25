@@ -6,6 +6,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BookModule } from './modules/book/book.module';
 import { MenuModule } from './modules/menu/menu.module';
+import { RoleModule } from './modules/role/role.module';
 import { ContentsModule } from './modules/contents/contents.module';
 import * as Joi from 'joi';
 import * as dotenv from 'dotenv';
@@ -64,6 +65,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
     BookModule,
     MenuModule,
     ContentsModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
