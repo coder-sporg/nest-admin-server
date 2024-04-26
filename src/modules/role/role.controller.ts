@@ -16,6 +16,31 @@ import { wrapperResponse } from '../../utils';
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
+  @Post('menu')
+  setRoleMenu(@Body() params: { roleId: number; menuId: number }) {
+    return wrapperResponse(
+      this.roleService.setRoleMenu(params.roleId, params.menuId),
+      '角色与菜单关联成功',
+    );
+  }
+
+  @Get(':id/menu')
+  findRoleMenu(@Param('id') id: string) {
+    // 获取角色菜单
+    return wrapperResponse(
+      this.roleService.findRoleMenu(+id),
+      '获取角色菜单成功',
+    );
+  }
+
+  @Delete('menu')
+  removeRoleMenu(@Body('roleId') roleId: number) {
+    return wrapperResponse(
+      this.roleService.removeRoleMenu(roleId),
+      '角色与菜单关联删除成功',
+    );
+  }
+
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
     return wrapperResponse(
@@ -44,6 +69,6 @@ export class RoleController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.roleService.remove(+id);
+    return wrapperResponse(this.roleService.remove(+id), '删除角色成功');
   }
 }
