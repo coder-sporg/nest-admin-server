@@ -93,6 +93,14 @@ export class RoleController {
     );
   }
 
+  @Get('role_auth/role_name')
+  getRoleAuthByRoleName(@Query('roleName') roleName) {
+    return wrapperResponse(
+      this.roleService.getRoleAuthByRoleName(roleName),
+      '获取权限成功',
+    );
+  }
+
   @Post()
   create(@Body() createRoleDto: CreateRoleDto) {
     return wrapperResponse(

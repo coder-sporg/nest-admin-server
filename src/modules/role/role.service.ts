@@ -3,7 +3,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './role.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { RoleMenu } from './role-menu.entity';
 import { Menu } from '../menu/menu.entity';
 import { RoleAuth } from './role-auth.entity';
@@ -181,5 +181,42 @@ export class RoleService {
     roleAuth.roleId = roleId;
     roleAuth.authId = authId;
     return this.roleAuthRepository.save(roleAuth);
+  }
+
+  // 根据角色名称获取角色权限
+  async getRoleAuthByRoleName(roleName: string) {
+    // '["super","admin"]'
+    const roles = JSON.parse(roleName);
+
+    // 没有角色 直接返回
+    if (!roles || roles.length === 0) {
+      return [];
+    }
+
+    // 查询当前角色
+    const roleList = await this.roleRepository.find({
+      where: {
+        name: In(roles),
+      },
+    });
+    const roleIds = roleList.map((item) => item.id);
+
+    // 查询当前角色的权限
+    const roleAuthList = await this.roleAuthRepository.find({
+      where: {
+        roleId: In(roleIds),
+      },
+    });
+    const authIds = roleAuthList.map((item) => item.authId);
+    // 去重 可能有多个角色，角色拥有的权限会有重复
+    const authIdList = [...new Set(authIds)];
+
+    const authList = await this.authRepository.find({
+      where: {
+        id: In(authIdList),
+      },
+    });
+
+    return authList;
   }
 }
