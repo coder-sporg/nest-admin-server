@@ -1,17 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('role_auth')
 export class RoleAuth {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  roleId: number;
 
-  @Column()
-  @Unique(['key'])
-  key: string;
-
-  @Column()
-  name: string;
-
-  @Column()
-  remark: string;
+  @PrimaryColumn()
+  authId: number;
 }

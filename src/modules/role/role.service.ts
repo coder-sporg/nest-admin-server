@@ -6,6 +6,8 @@ import { Role } from './role.entity';
 import { Repository } from 'typeorm';
 import { RoleMenu } from './role-menu.entity';
 import { Menu } from '../menu/menu.entity';
+import { RoleAuth } from './role-auth.entity';
+import { Auth } from './auth.entity';
 
 @Injectable()
 export class RoleService {
@@ -14,6 +16,9 @@ export class RoleService {
     @InjectRepository(RoleMenu)
     private roleMenuRepository: Repository<RoleMenu>,
     @InjectRepository(Menu) private menuRepository: Repository<Menu>,
+    @InjectRepository(Auth) private authRepository: Repository<Auth>,
+    @InjectRepository(RoleAuth)
+    private roleAuthRepository: Repository<RoleAuth>,
   ) {}
 
   async create(createRoleDto: CreateRoleDto) {
@@ -36,6 +41,8 @@ export class RoleService {
   async remove(id: number) {
     // 删除 菜单中角色 和 角色菜单关系
     await this.removeRoleMenu(id);
+    // 删除 角色权限关系
+    await this.removeRoleAuth(id);
     return this.roleRepository.delete(id);
   }
 
@@ -110,5 +117,69 @@ export class RoleService {
       this.menuRepository.update(menuId, menu);
     }
     return this.roleMenuRepository.save(roleMenu);
+  }
+
+  /**
+   * 角色-权限关系
+   */
+  getAuthList(key: string) {
+    // return this.authRepository.find({
+    //   where: {
+    //     key,
+    //   },
+    // });
+    if (key) {
+      // 模糊查询
+      return this.authRepository
+        .createQueryBuilder('auth')
+        .where('auth.key like :key', { key: `%${key}%` })
+        .getMany();
+    }
+    return this.authRepository.find();
+  }
+
+  createAuth(createAuthDto) {
+    return this.authRepository.save(createAuthDto);
+  }
+
+  async removeAuth(id: number) {
+    // 删除角色_权限表中的权限
+    await this.roleAuthRepository.delete({ authId: id });
+    return this.authRepository.delete(id);
+  }
+
+  async updateAuth(id: number, createAuthDto) {
+    const auth = await this.authRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (auth) {
+      return this.authRepository.save({
+        ...auth,
+        ...createAuthDto,
+      });
+    }
+  }
+
+  findRoleAuth(roleId: number) {
+    return this.roleAuthRepository.find({
+      where: {
+        roleId,
+      },
+    });
+  }
+
+  // 移除角色权限
+  async removeRoleAuth(roleId: number) {
+    return this.roleAuthRepository.delete({ roleId });
+  }
+
+  // 设置角色权限
+  async setRoleAuth(roleId: number, authId: number) {
+    const roleAuth = new RoleAuth();
+    roleAuth.roleId = roleId;
+    roleAuth.authId = authId;
+    return this.roleAuthRepository.save(roleAuth);
   }
 }
