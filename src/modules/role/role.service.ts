@@ -74,7 +74,8 @@ export class RoleService {
           }
         }
         menu.meta = JSON.stringify(meta);
-        await this.menuRepository.update(menuId, menu);
+        // 更新菜单
+        this.menuRepository.update(menuId, menu);
       }
     }
     return this.roleMenuRepository.delete({ roleId });
@@ -106,7 +107,7 @@ export class RoleService {
         meta.roles = [role.name];
       }
       menu.meta = JSON.stringify(meta);
-      await this.menuRepository.update(menuId, menu);
+      this.menuRepository.update(menuId, menu);
     }
     return this.roleMenuRepository.save(roleMenu);
   }
