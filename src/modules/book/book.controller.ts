@@ -9,6 +9,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -21,11 +22,22 @@ import { wrapperCountResponse, wrapperResponse } from '../../utils';
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
+  @Get('/category')
+  getBookCategory(@Req() req: any) {
+    return wrapperResponse(
+      this.bookService.getBookCategory(req.user.userid),
+      '获取图书分类成功',
+    );
+  }
+
   @Get()
-  getBookList(@Query() query: QueryBookDto) {
+  getBookList(@Query() query: QueryBookDto, @Req() req: any) {
+    const {
+      user: { userid },
+    } = req;
     return wrapperCountResponse(
-      this.bookService.getBookList(query),
-      this.bookService.getBookCount(query),
+      this.bookService.getBookList(query, userid),
+      this.bookService.getBookCount(query, userid),
       '获取图书列表成功',
     );
   }

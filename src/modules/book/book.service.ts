@@ -9,11 +9,16 @@ import { QueryBookDto } from './types';
 import { conditionSqlUtils, conditionUtils } from '../../utils/db_helper';
 import EpubBook from './epub-book';
 import { NGINX_PATH } from '../../utils/const';
+import { UserService } from '../user/user.service';
+import { Auth } from '../role/auth.entity';
+
+const AUTH_LIST = ['BusinessandManagement'];
 
 @Injectable()
 export class BookService {
   constructor(
     @InjectRepository(Book) private bookRepository: Repository<Book>,
+    private readonly userService: UserService,
   ) {}
 
   getBook(id: number) {
@@ -24,7 +29,7 @@ export class BookService {
     });
   }
 
-  getBookList(params: QueryBookDto) {
+  async getBookList(params: QueryBookDto, userId: number) {
     let { page = 1, pageSize = 20 } = params;
     const { title = '', author = '' } = params;
 
@@ -84,12 +89,20 @@ export class BookService {
     //   where += ` and book.author like '%${author}%'`;
     // }
 
-    const where = conditionSqlUtils(obj);
+    let where = conditionSqlUtils(obj);
+
+    // 查询是否需要精确到某一个分类
+    const categoryList = await this.getBookCategory(userId);
+    const categoryTexts = categoryList.map((item) => `'${item}'`).join(',');
+    if (categoryList && categoryList.length > 0) {
+      where += ` and book.categoryText in (${categoryTexts})`;
+    }
+    // select * from book where 1=1 and book.categoryText in ('BusinessandManagement') limit 20 offset 0
     const sql = `select * from book ${where} limit ${pageSize} offset ${(page - 1) * pageSize}`;
     return this.bookRepository.query(sql);
   }
 
-  getBookCount(params: QueryBookDto) {
+  async getBookCount(params: QueryBookDto, userId: number) {
     const { title = '', author = '' } = params;
     const obj = {
       'book.title': title,
@@ -101,7 +114,16 @@ export class BookService {
     // );
     // return newQueryBuilder.getCount(); // result => 1
 
-    const sql = `select count(*) as count from book ${conditionSqlUtils(obj)}`;
+    let where = conditionSqlUtils(obj);
+
+    // 查询 是否需要对 分类做限制
+    const categoryList = await this.getBookCategory(userId);
+    const categoryTexts = categoryList.map((item) => `'${item}'`).join(',');
+    if (categoryList && categoryList.length > 0) {
+      where += ` and book.categoryText in (${categoryTexts})`;
+    }
+
+    const sql = `select count(*) as count from book ${where}`;
     return this.bookRepository.query(sql); // result => [{count: '1'}]
   }
 
@@ -179,9 +201,52 @@ export class BookService {
   }
 
   deleteBook(id: number) {
-    console.log('id: ', id);
     // return this.bookRepository.delete(id);
     const deleteSql = `DELETE FROM book WHERE id = ${id}`;
     return this.bookRepository.query(deleteSql);
+  }
+
+  // 查询当前用户可以查询电子书籍的分类 去重
+  async getBookCategory(userId: number) {
+    const user = await this.userService.findOne(userId);
+    const roleStr = user.role ?? '[]';
+    let roles = JSON.parse(roleStr);
+    roles = roles.map((item) => `'${item}'`); // 转换成字符
+
+    // // 根据角色查角色列表
+    // const roleList = await this.bookRepository.query(
+    //   `SELECT id FROM role WHERE name IN (${roles.join(',')})`,
+    // );
+    // const roleIds = roleList.map((item) => item.id);
+
+    // // 根据角色查询权限
+    // const roleAuthList = await this.bookRepository.query(
+    //   `SELECT DISTINCT authId FROM role_auth WHERE roleId IN (${roleIds.join(',')})`,
+    // );
+    // const authIds = roleAuthList.map((item) => item.authId);
+
+    // // 根据权限查询分类
+    // const authList = await this.bookRepository.query(
+    //   `SELECT * FROM auth WHERE id IN (${authIds.join(',')})`,
+    // );
+
+    // 使用子查询
+    const authList = await this.bookRepository.query(
+      `SELECT * FROM auth WHERE id IN (
+        SELECT DISTINCT authId FROM role_auth WHERE roleId IN (
+          SELECT id FROM role WHERE name IN (${roles.join(',')})
+        )
+      )`,
+    );
+
+    // 使用 queryBuilder 进行子查询
+    // https://typeorm.bootcss.com/select-query-builder#%E4%BD%BF%E7%94%A8%E5%AD%90%E6%9F%A5%E8%AF%A2
+
+    const categoryAuth = authList.filter((item: Auth) =>
+      AUTH_LIST.includes(item.key),
+    );
+
+    const categoryList = categoryAuth.map((item: Auth) => item.key); // [ 'BusinessandManagement' ]
+    return categoryList;
   }
 }
