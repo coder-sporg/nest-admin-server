@@ -69,21 +69,39 @@ export class RoleService {
     const menuIdList = menuList.map((item) => item.menuId);
 
     // 删除菜单 meta 中的角色
-    for (const menuId of menuIdList) {
-      const menu = await this.menuRepository.findOne({
-        where: { id: menuId },
-      });
-      if (menu) {
+    // for (const menuId of menuIdList) {
+    //   const menu = await this.menuRepository.findOne({
+    //     where: { id: menuId },
+    //   });
+    //   if (menu) {
+    //     const meta = JSON.parse(menu.meta);
+    //     if (meta.roles && meta.roles.length > 0) {
+    //       if (meta.roles.includes(role.name)) {
+    //         meta.roles = meta.roles.filter((item) => item !== role.name);
+    //       }
+    //     }
+    //     menu.meta = JSON.stringify(meta);
+    //     // 更新菜单
+    //     this.menuRepository.update(menuId, menu);
+    //   }
+    // }
+
+    // 优化
+    const menus = await this.menuRepository.find({
+      where: { id: In(menuIdList) },
+    });
+    if (menus && menus.length > 0) {
+      for (const menu of menus) {
         const meta = JSON.parse(menu.meta);
         if (meta.roles && meta.roles.length > 0) {
           if (meta.roles.includes(role.name)) {
             meta.roles = meta.roles.filter((item) => item !== role.name);
           }
+          menu.meta = JSON.stringify(meta);
         }
-        menu.meta = JSON.stringify(meta);
-        // 更新菜单
-        this.menuRepository.update(menuId, menu);
       }
+      // 更新菜单 ==> 批量更新
+      this.menuRepository.save(menus);
     }
     return this.roleMenuRepository.delete({ roleId });
   }
