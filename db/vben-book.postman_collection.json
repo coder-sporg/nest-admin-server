@@ -1,0 +1,746 @@
+{
+	"info": {
+		"_postman_id": "7d320fab-ec2f-4a52-a122-2914ce6ea5c3",
+		"name": "vben-book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32183243"
+	},
+	"item": [
+		{
+			"name": "用户",
+			"item": [
+				{
+					"name": "获取用户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/user",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建用户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzExNzA5MjMzLCJleHAiOjE3MTIzMTQwMzN9.I2KixzAB65yaZzGMORpDIDOo5xwqDWHJvoJRgVAugWI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"ys-test2\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"test\",\r\n    \"nickname\": \"ys-test2\",\r\n    \"avatar\": \"https://img.aliyundrive.com/avatar/8517469426064407ae52943361ca8ed2.jpeg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/user",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "编辑用户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtMDMyODEiLCJ1c2VyaWQiOjEzLCJpYXQiOjE3MTE3MDc3NjcsImV4cCI6MTcxNDI5OTc2N30.r4uuGjMATkD6zb4kZOWJGszUlyP8gv3yk6A4xBTrEY0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test-03281\",\r\n    \"role\": \"admin\",\r\n    \"nickname\": \"03281\",\r\n    \"avatar\": \"https://img.aliyundrive.com/avatar/8517469426064407ae52943361ca8ed2.jpeg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/user/13",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询用户",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/api/user/13",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询所有用户",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtMDMyODEiLCJ1c2VyaWQiOjEzLCJpYXQiOjE3MTE3MDc3NjcsImV4cCI6MTcxNDI5OTc2N30.r4uuGjMATkD6zb4kZOWJGszUlyP8gv3yk6A4xBTrEY0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/user",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除用户",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/user/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "用户信息",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzExOTQwNTE3LCJleHAiOjE3MTI1NDUzMTd9.urSGuCI0lqRxSmFW3gI5dTg35CQ5jmMeFRpp8C2VHNs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/user/info",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"user",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "菜单",
+			"item": [
+				{
+					"name": "获取菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/menu",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzExOTQwNTE3LCJleHAiOjE3MTI1NDUzMTd9.urSGuCI0lqRxSmFW3gI5dTg35CQ5jmMeFRpp8C2VHNs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"path\": \"pie\",\r\n    \"name\": \"Pie4\"\r\n    // \"redirect\": \"\"\r\n    // \"meta\": \"{\\\"title\\\":\\\"routes.demo.charts.pie\\\"}\",\r\n    // \"active\": 1,\r\n    // \"pid\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/menu",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "编辑菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzExOTQwNTE3LCJleHAiOjE3MTI1NDUzMTd9.urSGuCI0lqRxSmFW3gI5dTg35CQ5jmMeFRpp8C2VHNs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"path\": \"pie\",\r\n    \"name\": \"Pie\",\r\n    \"redirect\": \"\",\r\n    \"meta\": \"{\\\"title\\\":\\\"routes.demo.charts.pie\\\"}\",\r\n    \"active\": \"1\",\r\n    \"pid\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/menu/17",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"menu",
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "电子书",
+			"item": [
+				{
+					"name": "获取所有列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzODU2NjkxLCJleHAiOjE3MTQ0NjE0OTF9.I2z-BZvx95r9HXPCrLYU6IyNXc9SCuyk-02TwW9A4pg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/book?page=1&pageSize=20&title=New Vision 2050&author=Hiroshi Komiyama",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"book"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								},
+								{
+									"key": "title",
+									"value": "New Vision 2050"
+								},
+								{
+									"key": "author",
+									"value": "Hiroshi Komiyama"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据id查询",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEyNzM3OTIzLCJleHAiOjE3MTMzNDI3MjN9.LLid4Vdkdbqckvkr_eRImrhERv6OCTeHT4e1Vn74wI0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/book/15",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"book",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "上传电子书",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEyNzM3OTIzLCJleHAiOjE3MTMzNDI3MjN9.LLid4Vdkdbqckvkr_eRImrhERv6OCTeHT4e1Vn74wI0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/E:/ebook/epub/2010_Book_CyborgsInLatinAmerica.epub"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/book/upload",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"book",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "电子书目录删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzODU2NjkxLCJleHAiOjE3MTQ0NjE0OTF9.I2z-BZvx95r9HXPCrLYU6IyNXc9SCuyk-02TwW9A4pg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fileName\": \"bbb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/contents",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"contents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据书名查询目录",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzODU2NjkxLCJleHAiOjE3MTQ0NjE0OTF9.I2z-BZvx95r9HXPCrLYU6IyNXc9SCuyk-02TwW9A4pg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/contents/fileName?fileName=2016_Book_PhysiologyPsychoacousticsAndCo",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"contents",
+								"fileName"
+							],
+							"query": [
+								{
+									"key": "fileName",
+									"value": "2016_Book_PhysiologyPsychoacousticsAndCo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询当前用户权限",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/book/category",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"book",
+								"category"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "角色",
+			"item": [
+				{
+					"name": "查询角色",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/role",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询角色菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/role/1/menu",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"role",
+								"1",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "关联角色菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleId\": 5,\r\n    \"menuId\": 7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/role/menu",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"role",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除角色菜单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/role/menu",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"role",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "根据角色名称查询权限",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyLWFkbWluIiwidXNlcmlkIjoxNCwiaWF0IjoxNzEzOTM3NTYxLCJleHAiOjE3MTQ1NDIzNjF9.1YezyDn-XLiL0ZhIzDzCqENQ4gesu4f5T_IatpL-fhA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/role/role_auth/role_name?roleName=[%22super%22,%22admin%22]",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"role",
+								"role_auth",
+								"role_name"
+							],
+							"query": [
+								{
+									"key": "roleName",
+									"value": "[%22super%22,%22admin%22]"
+								},
+								{
+									"key": "roleName",
+									"value": "[]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"super-admin\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/auth/login",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "47.93.176.16:3000"
+		}
+	]
+}
