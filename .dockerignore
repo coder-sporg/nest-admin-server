@@ -1,0 +1,24 @@
+# 版本控制系统
+.git/
+.gitignore
+
+# node 依赖
+node_modules/
+
+# 构建目录
+dist/
+
+# IDE
+.vscode/
+
+# 配置文件
+Dockerfile
+.dockerignore
+
+# 其他
+.eslintignore
+.eslintrc
+.prettierrc
+.prettierignore
+*.md
+*.txt
